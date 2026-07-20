@@ -136,11 +136,11 @@ class AuthController {
             $errors[] = 'Invalid email format';
         }
         
-        if (empty($phone)) {
-            $errors[] = 'Phone number is required';
-        } elseif (!preg_match('/^[0-9]{10,15}$/', $phone)) {
-            $errors[] = 'Invalid phone number format';
-        }
+       if (empty($phone)) {
+    $errors[] = 'Phone number is required';
+} elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
+    $errors[] = 'Phone number must contain exactly 10 digits';
+}
         
         if (empty($password)) {
             $errors[] = 'Password is required';
