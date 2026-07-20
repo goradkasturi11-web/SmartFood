@@ -144,7 +144,7 @@ class AuthController {
         
         if (empty($password)) {
             $errors[] = 'Password is required';
-        } elseif (strlen($password) < 6) {
+        } elseif (strlen($password) < 8) {
             $errors[] = 'Password must be at least 6 characters';
         }
         
