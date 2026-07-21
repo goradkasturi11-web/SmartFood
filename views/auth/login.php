@@ -4,7 +4,7 @@ require_once __DIR__ . '/../layouts/header.php';
 ?>
 
 <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
+    <div class="col-md-6 col-lg-6">
         <div class="card shadow">
             <div class="card-body p-4">
 
