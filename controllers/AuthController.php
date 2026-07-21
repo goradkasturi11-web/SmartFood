@@ -136,6 +136,18 @@ class AuthController {
             $errors[] = 'Invalid email format';
         }
         
+<<<<<<< HEAD
+        if (empty($phone)) {
+            $errors[] = 'Phone number is required';
+        } elseif (!preg_match('/^[0-9]{10,15}$/', $phone)) {
+            $errors[] = 'Invalid phone number format';
+        }
+        
+        if (empty($password)) {
+            $errors[] = 'Password is required';
+        } elseif (strlen($password) < 6) {
+            $errors[] = 'Password must be at least 6 characters';
+=======
        if (empty($phone)) {
     $errors[] = 'Phone number is required';
 } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
@@ -146,6 +158,7 @@ class AuthController {
             $errors[] = 'Password is required';
         } elseif (strlen($password) < 8) {
             $errors[] = 'Password must be at least 8 characters';
+>>>>>>> 0fab5bbc4d68a54e1e6cc09ef5016f8a93a5689d
         }
         
         if ($password !== $confirmPassword) {
