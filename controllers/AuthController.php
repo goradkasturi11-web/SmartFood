@@ -26,19 +26,22 @@ class AuthController {
             header('Location: ' . BASE_URL . '/index.php?route=login');
             exit;
         }
-        
         $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
-        
+
         $errors = [];
-        
+
+        // Email validation
         if (empty($email)) {
             $errors[] = 'Email is required';
-        }
-        
-        if (empty($password)) {
-            $errors[] = 'Password is required';
-        }
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Invalid email format';
+}
+
+// Password validation
+if (empty($password)) {
+    $errors[] = 'Password is required';
+}
         
         if (!empty($errors)) {
             $_SESSION['login_errors'] = $errors;
@@ -50,6 +53,7 @@ class AuthController {
         $user = $this->userModel->login($email, $password);
         
         if ($user) {
+            session_regenerate_id(true);
             // Check if NGO is verified
             if ($user['role'] === 'ngo') {
                 $ngoDetails = $this->userModel->getNGODetails($user['user_id']);
@@ -137,15 +141,27 @@ class AuthController {
         }
         
        if (empty($phone)) {
-    $errors[] = 'Phone number is required';
-} elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
-    $errors[] = 'Phone number must contain exactly 10 digits';
-}
+        $errors[] = 'Phone number is required';
+        } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
+            $errors[] = 'Phone number must contain exactly 10 digits';
+        }
         
         if (empty($password)) {
-            $errors[] = 'Password is required';
-        } elseif (strlen($password) < 8) {
-            $errors[] = 'Password must be at least 8 characters';
+
+        $errors[] = 'Password is required';
+
+        } elseif (strlen($password) < 6) {
+
+         $errors[] = 'Password must be at least 6 characters';
+
+        } elseif (
+        !preg_match('/[A-Z]/', $password) ||
+        !preg_match('/[a-z]/', $password) ||
+        !preg_match('/[0-9]/', $password) ||
+        !preg_match('/[\W_]/', $password)
+        ) {
+
+        $errors[] = 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.';
         }
         
         if ($password !== $confirmPassword) {
