@@ -15,6 +15,10 @@ require_once __DIR__ . '/../layouts/header.php';
                     Sign in to continue your Smart Food journey.
                 </p>
 
+
+
+
+                
                 <?php if (isset($_SESSION['login_errors'])): ?>
                     <div class="alert alert-danger">
                     <strong>Please fix the following errors:</strong>

@@ -174,6 +174,7 @@ class User {
     
     /**
      * Suspend user account
+     * updated some code to handle user suspension
      */
     public function suspendUser($userId) {
         try {
