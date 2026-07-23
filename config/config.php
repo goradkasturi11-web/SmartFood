@@ -1,6 +1,6 @@
 <?php
 /**
- * Application Configuration
+
  * Smart Food Redistribution Platform
  */
 
