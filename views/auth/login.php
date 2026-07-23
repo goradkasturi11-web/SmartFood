@@ -5,20 +5,25 @@ require_once __DIR__ . '/../layouts/header.php';
 
 <div class="row justify-content-center">
     <div class="col-md-6 col-lg-6">
-        <div class="card shadow">
+        <div class="card shadow-lg border-0 rounded-4">
             <div class="card-body p-4">
 
-                <h2 class="text-center mb-2">Welcome Back!</h2>
+                <h2 class="text-center mb-2 fw-bold">
+                   👋 Welcome Back!
+                </h2>
                 <p class="text-center text-muted mb-4">
-                    Login to your SmartFood account
+                    Sign in to continue your Smart Food journey.
                 </p>
 
                 <?php if (isset($_SESSION['login_errors'])): ?>
                     <div class="alert alert-danger">
+                    <strong>Please fix the following errors:</strong>
+                    <ul class="mb-0 mt-2">
                         <?php foreach ($_SESSION['login_errors'] as $error): ?>
-                            <?php echo htmlspecialchars($error); ?><br>
+                            <li><?php echo htmlspecialchars($error); ?></li>
                         <?php endforeach; ?>
-                    </div>
+                    </ul>
+                </div>
                     <?php unset($_SESSION['login_errors']); ?>
                 <?php endif; ?>
 
@@ -41,6 +46,8 @@ require_once __DIR__ . '/../layouts/header.php';
                             id="email"
                             name="email"
                             placeholder="Enter your email"
+                            autocomplete="email"
+                            autofocus
                             value="<?php echo isset($_SESSION['login_email']) ? htmlspecialchars($_SESSION['login_email']) : ''; ?>"
                             required>
 
@@ -75,8 +82,8 @@ require_once __DIR__ . '/../layouts/header.php';
 
                     <!-- Login Button -->
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-success btn-lg">
-                            Login
+                        <button type="submit" class="btn btn-success btn-lg w-100">
+                              🔐 Login
                         </button>
                     </div>
 
