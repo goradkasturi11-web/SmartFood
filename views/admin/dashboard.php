@@ -26,7 +26,7 @@ require_once __DIR__ . '/../layouts/header.php';
         <div class="card bg-primary text-white">
             <div class="card-body">
                 <h5 class="card-title">Total Donors</h5>
-                <h2 class="card-text"><?php echo $totalDonors; ?></h2>
+                <h2 class="card-text"><?php echo isset($totalDonors) ? $totalDonors : 0; ?></h2>
             </div>
         </div>
     </div>
@@ -60,14 +60,16 @@ require_once __DIR__ . '/../layouts/header.php';
     <div class="col-md-6">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Pending NGO Verifications</h5>
+                <h5 class="mb-0">
+                    Pending NGO Verifications (<?php echo count($pendingNGOs); ?>)
+                </h5>
                 <a href="<?php echo BASE_URL; ?>/index.php?route=admin-ngo-verification" class="btn btn-sm btn-primary">
                     View All
                 </a>
             </div>
             <div class="card-body">
                 <?php if (empty($pendingNGOs)): ?>
-                    <p class="text-muted mb-0">No pending NGO verifications</p>
+                    <p class="text-muted mb-0">There are currently no NGOs waiting for verification.</p>
                 <?php else: ?>
                     <ul class="list-group list-group-flush">
                         <?php foreach (array_slice($pendingNGOs, 0, 5) as $ngo): ?>
@@ -77,10 +79,10 @@ require_once __DIR__ . '/../layouts/header.php';
                                     <small class="text-muted"><?php echo htmlspecialchars($ngo['email']); ?></small>
                                 </div>
                                 <div>
-                                    <a href="<?php echo BASE_URL; ?>/index.php?route=admin-verify-ngo&id=<?php echo $ngo['ngo_id']; ?>" class="btn btn-sm btn-success" onclick="return confirm('Verify this NGO?');">
+                                    <a href="<?php echo BASE_URL; ?>/index.php?route=admin-verify-ngo&id=<?php echo $ngo['ngo_id']; ?>" class="btn btn-sm btn-success" onclick="return confirm('Are you sure you want to verify this NGO?');">
                                         <i class="bi bi-check"></i>
                                     </a>
-                                    <a href="<?php echo BASE_URL; ?>/index.php?route=admin-reject-ngo&id=<?php echo $ngo['ngo_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Reject this NGO?');">
+                                    <a href="<?php echo BASE_URL; ?>/index.php?route=admin-reject-ngo&id=<?php echo $ngo['ngo_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to reject this NGO?');">
                                         <i class="bi bi-x"></i>
                                     </a>
                                 </div>
