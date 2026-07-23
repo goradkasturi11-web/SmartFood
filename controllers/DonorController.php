@@ -82,6 +82,9 @@ class DonorController {
             $errors[] = 'Food name is required';
         }
         
+        if (strlen($foodName) > 100) {
+    $errors[] = 'Food name is too long.';
+}
         if (empty($quantityValue) || !is_numeric($quantityValue)) {
             $errors[] = 'Valid quantity is required';
         }
