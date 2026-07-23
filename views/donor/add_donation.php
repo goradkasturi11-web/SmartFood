@@ -2,7 +2,7 @@
 $pageTitle = 'Add Donation';
 require_once __DIR__ . '/../layouts/header.php';
 
-// Generate form token for CSRF protection
+// Generate form token for CSRF secured
 $formToken = bin2hex(random_bytes(32));
 $_SESSION['form_token'] = $formToken;
 ?>
