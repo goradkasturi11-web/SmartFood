@@ -5,9 +5,13 @@ require_once __DIR__ . '/../layouts/header.php';
 
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
-        <div class="card shadow">
+        <div class="card border-0 shadow-1g rounded-4">
             <div class="card-body p-4">
-                <h2 class="text-center mb-4">Register</h2>
+                <div class="text-center mb-4">
+                <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                <h2 class="fw-bold">Create Your Account</h2>
+                <p class="text-muted">Join the Smart Food Redistribution Platform</p>
+            </div>
                 
                 <?php if (isset($_SESSION['register_errors'])): ?>
                     <div class="alert alert-danger">
@@ -29,32 +33,61 @@ require_once __DIR__ . '/../layouts/header.php';
                     </div>
                     
                     <div class="mb-3">
-                        <label for="name" class="form-label">Full Name</label>
+                        <label for="name" class="form-label">
+                        <i class="fas fa-user text-success me-2"></i>
+                         Full Name
+                        </label>
                         <input type="text" class="form-control" id="name" name="name" 
                                value="<?php echo isset($_SESSION['register_data']['name']) ? htmlspecialchars($_SESSION['register_data']['name']) : ''; ?>" required>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">
+                        <i class="fas fa-envelope text-success me-2"></i>
+                        Email
+                        </label>
                         <input type="email" class="form-control" id="email" name="email" 
                                value="<?php echo isset($_SESSION['register_data']['email']) ? htmlspecialchars($_SESSION['register_data']['email']) : ''; ?>" required>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="phone" class="form-label">Phone Number</label>
+                        <label for="phone" class="form-label">
+                        <i class="fas fa-phone text-success me-2"></i>
+                         Phone Number
+                        </label>
                         <input type="tel" class="form-control" id="phone" name="phone" 
                                value="<?php echo isset($_SESSION['register_data']['phone']) ? htmlspecialchars($_SESSION['register_data']['phone']) : ''; ?>" required>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">
+                        <i class="fas fa-lock text-success me-2"></i>
+                        Password
+                        </label>
                         <input type="password" class="form-control" id="password" name="password" required>
-                        <small class="text-muted">Minimum 6 characters</small>
+                     <div class="alert alert-light border rounded-3 mt-2">
+                        <strong class="text-success">
+                        <i class="fas fa-shield-alt me-2"></i>
+                         Password Requirements
+                        </strong>
+
+                        <ul class="mb-0 mt-2">
+                        <li>Minimum 6 characters</li>
+                        <li>At least one uppercase letter (A-Z)</li>
+                        <li>At least one lowercase letter (a-z)</li>
+                        <li>At least one number (0-9)</li>
+                        <li>At least one special character (@, #, $, %, etc.)</li>
+                         </ul>
+                    </div>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <label for="confirm_password" class="form-label">
+                        <i class="fas fa-lock text-success me-2"></i>
+                        Confirm Password
+                        </label>
                         <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        
                     </div>
                     
                     <div class="mb-3">
@@ -90,7 +123,10 @@ require_once __DIR__ . '/../layouts/header.php';
                     </div>
                     
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-success">Register</button>
+                        <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill">
+    <i class="fas fa-user-plus me-2"></i>
+    Create Account
+</button>
                     </div>
                 </form>
                 

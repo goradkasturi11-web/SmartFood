@@ -26,19 +26,22 @@ class AuthController {
             header('Location: ' . BASE_URL . '/index.php?route=login');
             exit;
         }
-        
         $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
-        
+
         $errors = [];
-        
+
+        // Email validation
         if (empty($email)) {
             $errors[] = 'Email is required';
-        }
-        
-        if (empty($password)) {
-            $errors[] = 'Password is required';
-        }
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Invalid email format';
+}
+
+// Password validation
+if (empty($password)) {
+    $errors[] = 'Password is required';
+}
         
         if (!empty($errors)) {
             $_SESSION['login_errors'] = $errors;
@@ -50,6 +53,7 @@ class AuthController {
         $user = $this->userModel->login($email, $password);
         
         if ($user) {
+            session_regenerate_id(true);
             // Check if NGO is verified
             if ($user['role'] === 'ngo') {
                 $ngoDetails = $this->userModel->getNGODetails($user['user_id']);

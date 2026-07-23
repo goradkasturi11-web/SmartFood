@@ -39,7 +39,7 @@ require_once __DIR__ . '/../layouts/header.php';
         <div class="card bg-primary text-white">
             <div class="card-body">
                 <h5 class="card-title">Total Requests</h5>
-                <h2 class="card-text"><?php echo count($requests); ?></h2>
+                <h2 class="card-text display-3 fw-bold"><?php echo count($requests); ?></h2>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@ require_once __DIR__ . '/../layouts/header.php';
         <div class="card bg-warning text-dark">
             <div class="card-body">
                 <h5 class="card-title">Pending</h5>
-                <h2 class="card-text"><?php echo count(array_filter($requests, function($r) { return $r['status'] === 'pending'; })); ?></h2>
+                <h2 class="card-text display-3 fw-bold "><?php echo count(array_filter($requests, function($r) { return $r['status'] === 'pending'; })); ?></h2>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@ require_once __DIR__ . '/../layouts/header.php';
         <div class="card bg-success text-white">
             <div class="card-body">
                 <h5 class="card-title">Approved</h5>
-                <h2 class="card-text"><?php echo count(array_filter($requests, function($r) { return $r['status'] === 'approved'; })); ?></h2>
+                <h2 class="card-text display-3 fw-bold"><?php echo count(array_filter($requests, function($r) { return $r['status'] === 'approved'; })); ?></h2>
             </div>
         </div>
     </div>
@@ -63,17 +63,18 @@ require_once __DIR__ . '/../layouts/header.php';
         <div class="card bg-info text-white">
             <div class="card-body">
                 <h5 class="card-title">Completed</h5>
-                <h2 class="card-text"><?php echo count(array_filter($requests, function($r) { return $r['donation_status'] === 'completed'; })); ?></h2>
+                <h2 class="card-text display-3 fw-bold"><?php echo count(array_filter($requests, function($r) { return $r['donation_status'] === 'completed'; })); ?></h2>
             </div>
         </div>
     </div>
 </div>
 
-<h3 class="mb-3">My Requests</h3>
+<h3 class="mt-5 mb-3">My Requests</h3>
 
 <?php if (empty($requests)): ?>
-    <div class="alert alert-info">
-        You haven't made any requests yet. <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-browse-food">Browse available food</a>.
+    <div class="alert alert-info d-flex align-items-center justify-content-between p-3" role="alert">
+       <span> You haven't made any requests yet.</span>
+       <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-browse-food" class="btn btn-dark text-white fw-semibold">Browse available food</a>
     </div>
 <?php else: ?>
     <div class="table-responsive">
