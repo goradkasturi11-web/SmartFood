@@ -11,8 +11,16 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container">
-            <a class="navbar-brand" href="<?php echo BASE_URL; ?>/index.php?route=home">
-                <i class="bi bi-basket"></i> <?php echo SITE_NAME; ?>
+            <a class="navbar-brand d-flex flex-column align-items-start" href="<?php echo BASE_URL; ?>/index.php?route=home">
+                <svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="16" width="24" height="3" rx="1.5" fill="white"/>
+                    <rect x="6" y="10" width="4" height="6" rx="1" fill="white"/>
+                    <rect x="14" y="6" width="4" height="10" rx="1" fill="white"/>
+                    <rect x="22" y="10" width="4" height="6" rx="1" fill="white"/>
+                    <circle cx="8" cy="8" r="2" fill="#FFD700"/>
+                    <circle cx="24" cy="8" r="2" fill="#FF6B6B"/>
+                </svg>
+                <span class="fw-bold" style="font-size: 1.1rem; margin-top: 4px;"><?php echo SITE_NAME; ?></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

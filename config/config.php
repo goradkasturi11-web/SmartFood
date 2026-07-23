@@ -18,7 +18,7 @@ if (!defined('BASE_URL')) {
 }
 
 // Site name
-define('SITE_NAME', 'Smart Food Redistribution Platform');
+define('SITE_NAME', 'FoodBridge');
 
 // File upload settings
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');

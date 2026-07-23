@@ -7,6 +7,23 @@
 // Load configuration
 require_once __DIR__ . '/../config/config.php';
 
+// Security Headers
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+
+// Maintenance Mode Check
+$maintenanceFile = __DIR__ . '/../.maintenance';
+if (file_exists($maintenanceFile)) {
+    // Allow access only if user is logged in as admin
+    if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+        http_response_code(503);
+        require_once __DIR__ . '/../views/maintenance.php';
+        exit;
+    }
+}
+
 // Check if database is set up
 try {
     $db = Database::getInstance()->getConnection();
@@ -20,8 +37,39 @@ try {
     }
 }
 
+// Basic Rate Limiting (prevent abuse)
+$rateLimitKey = 'rate_limit_' . ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+if (!isset($_SESSION[$rateLimitKey])) {
+    $_SESSION[$rateLimitKey] = ['count' => 0, 'time' => time()];
+}
+$_SESSION[$rateLimitKey]['count']++;
+// Reset if more than 60 seconds have passed
+if (time() - $_SESSION[$rateLimitKey]['time'] > 60) {
+    $_SESSION[$rateLimitKey] = ['count' => 1, 'time' => time()];
+}
+// Block if more than 100 requests per minute
+if ($_SESSION[$rateLimitKey]['count'] > 100) {
+    http_response_code(429);
+    echo "<h2>Too Many Requests</h2>";
+    echo "<p>Please wait a moment before trying again.</p>";
+    exit;
+}
+
 // Get route from query parameter
 $route = $_GET['route'] ?? 'home';
+
+// Validate route to prevent directory traversal
+if (preg_match('/\.\./', $route) || preg_match('/[\/\\\\]/', $route)) {
+    http_response_code(400);
+    echo "<h2>Invalid Route</h2>";
+    exit;
+}
+
+// Log route access for debugging (optional - can be disabled in production)
+if (defined('ENABLE_ROUTE_LOGGING') && ENABLE_ROUTE_LOGGING) {
+    $logMessage = date('Y-m-d H:i:s') . " - Route: $route - IP: " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . "\n";
+    file_put_contents(__DIR__ . '/../logs/route.log', $logMessage, FILE_APPEND);
+}
 
 // Route handling
 switch ($route) {

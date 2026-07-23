@@ -88,40 +88,46 @@ class Donation {
      */
     public function getAvailableDonations($filters = []) {
         try {
-            $sql = "SELECT d.*, u.name as donor_name, u.phone as donor_phone, 
+            $sql = "SELECT d.*, u.name as donor_name, u.phone as donor_phone,
                     (SELECT COUNT(*) FROM requests r WHERE r.donation_id = d.donation_id AND r.status = 'pending') as pending_requests
-                    FROM donations d 
-                    JOIN users u ON d.donor_id = u.user_id 
+                    FROM donations d
+                    JOIN users u ON d.donor_id = u.user_id
                     WHERE d.status = 'available' AND d.expiry_time > NOW()";
-            
+
             $params = [];
-            
+
             if (!empty($filters['food_type'])) {
                 $sql .= " AND d.food_type = :food_type";
                 $params[':food_type'] = $filters['food_type'];
             }
-            
+
             if (!empty($filters['min_quantity'])) {
                 $sql .= " AND d.quantity_value >= :min_quantity";
                 $params[':min_quantity'] = $filters['min_quantity'];
             }
-            
+
             if (!empty($filters['location'])) {
                 $sql .= " AND (d.pickup_location LIKE :location OR u.address LIKE :location)";
                 $params[':location'] = '%' . $filters['location'] . '%';
             }
-            
+
             $sql .= " ORDER BY d.created_at DESC";
-            
+
+            error_log("Donation Model - SQL: " . $sql);
+            error_log("Donation Model - Params: " . json_encode($params));
+
             $stmt = $this->db->prepare($sql);
-            
+
             foreach ($params as $key => $value) {
                 $stmt->bindValue($key, $value);
             }
-            
+
             $stmt->execute();
-            
-            return $stmt->fetchAll();
+
+            $result = $stmt->fetchAll();
+            error_log("Donation Model - Result count: " . count($result));
+
+            return $result;
         } catch(PDOException $e) {
             error_log("Get available donations error: " . $e->getMessage());
             return false;
