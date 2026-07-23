@@ -30,19 +30,18 @@ require_once __DIR__ . '/../layouts/header.php';
                 </div>
                     <?php unset($_SESSION['login_errors']); ?>
                 <?php endif; ?>
-
+                
                 <?php if (isset($_SESSION['register_success'])): ?>
                     <div class="alert alert-success">
                         <?php echo htmlspecialchars($_SESSION['register_success']); ?>
                     </div>
                     <?php unset($_SESSION['register_success']); ?>
                 <?php endif; ?>
-
+                
                 <form action="<?php echo BASE_URL; ?>/index.php?route=login" method="POST">
-
-                    <!-- Email -->
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
+<<<<<<< HEAD
 
                         <input
                             type="email"
@@ -55,70 +54,35 @@ require_once __DIR__ . '/../layouts/header.php';
                             value="<?php echo isset($_SESSION['login_email']) ? htmlspecialchars($_SESSION['login_email']) : ''; ?>"
                             required>
 
+=======
+                        <input type="email" class="form-control" id="email" name="email" 
+                               value="<?php echo isset($_SESSION['login_email']) ? htmlspecialchars($_SESSION['login_email']) : ''; ?>" required>
+>>>>>>> c423979f69fd81446d838837b51356d62256a068
                         <?php unset($_SESSION['login_email']); ?>
                     </div>
-
-                    <!-- Password -->
+                    
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            required>
-
-                        <!-- Show Password -->
-                        <div class="form-check mt-2">
-                            <input
-                                class="form-check-input"
-                                type="checkbox"
-                                id="showPassword"
-                                onclick="togglePassword()">
-
-                            <label class="form-check-label" for="showPassword">
-                                Show Password
-                            </label>
-                        </div>
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-
-                    <!-- Login Button -->
+                    
                     <div class="d-grid">
+<<<<<<< HEAD
                         <button type="submit" class="btn btn-success btn-lg w-100">
                               🔐 Login
                         </button>
+=======
+                        <button type="submit" class="btn btn-success">Login</button>
+>>>>>>> c423979f69fd81446d838837b51356d62256a068
                     </div>
-
                 </form>
-
+                
                 <div class="text-center mt-3">
-                    <p>
-                        Don't have an account?
-                        <a href="<?php echo BASE_URL; ?>/index.php?route=register">
-                            Register here
-                        </a>
-                    </p>
+                    <p>Don't have an account? <a href="<?php echo BASE_URL; ?>/index.php?route=register">Register here</a></p>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
-<script>
-function togglePassword() {
-
-    var password = document.getElementById("password");
-
-    if (password.type === "password") {
-        password.type = "text";
-    } else {
-        password.type = "password";
-    }
-
-}
-</script>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

@@ -139,7 +139,7 @@ if (empty($password)) {
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Invalid email format';
         }
-        
+      
        if (empty($phone)) {
         $errors[] = 'Phone number is required';
         } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
@@ -162,6 +162,9 @@ if (empty($password)) {
         ) {
 
         $errors[] = 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.';
+            $errors[] = 'Password is required';
+        } elseif (strlen($password) < 8) {
+            $errors[] = 'Password must be at least 8 characters';
         }
         
         if ($password !== $confirmPassword) {
