@@ -57,9 +57,21 @@ require_once __DIR__ . '/../layouts/header.php';
                     </div>
                     
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                    <label for="password" class="form-label">Password</label>
+
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            required>
+
+                        <span class="input-group-text" onclick="togglePassword()" style="cursor:pointer;">
+                            <i class="bi bi-eye" id="toggleIcon"></i>
+                        </span>
                     </div>
+                </div>
                     
                     <div class="d-grid">
                         <button type="submit" class="btn btn-success btn-lg w-100">
@@ -75,5 +87,20 @@ require_once __DIR__ . '/../layouts/header.php';
         </div>
     </div>
 </div>
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const icon = document.getElementById("toggleIcon");
 
+    if (password.type === "password") {
+        password.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    } else {
+        password.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    }
+}
+</script>
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
