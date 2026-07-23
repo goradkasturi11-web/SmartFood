@@ -41,7 +41,6 @@ require_once __DIR__ . '/../layouts/header.php';
                 <form action="<?php echo BASE_URL; ?>/index.php?route=login" method="POST">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-<<<<<<< HEAD
 
                         <input
                             type="email"
@@ -54,10 +53,6 @@ require_once __DIR__ . '/../layouts/header.php';
                             value="<?php echo isset($_SESSION['login_email']) ? htmlspecialchars($_SESSION['login_email']) : ''; ?>"
                             required>
 
-=======
-                        <input type="email" class="form-control" id="email" name="email" 
-                               value="<?php echo isset($_SESSION['login_email']) ? htmlspecialchars($_SESSION['login_email']) : ''; ?>" required>
->>>>>>> c423979f69fd81446d838837b51356d62256a068
                         <?php unset($_SESSION['login_email']); ?>
                     </div>
                     
@@ -67,13 +62,9 @@ require_once __DIR__ . '/../layouts/header.php';
                     </div>
                     
                     <div class="d-grid">
-<<<<<<< HEAD
                         <button type="submit" class="btn btn-success btn-lg w-100">
                               🔐 Login
                         </button>
-=======
-                        <button type="submit" class="btn btn-success">Login</button>
->>>>>>> c423979f69fd81446d838837b51356d62256a068
                     </div>
                 </form>
                 
