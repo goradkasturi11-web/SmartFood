@@ -139,29 +139,14 @@ if (empty($password)) {
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Invalid email format';
         }
-      
-       if (empty($phone)) {
-        $errors[] = 'Phone number is required';
+        
+        if (empty($phone)) {
+            $errors[] = 'Phone number is required';
         } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
             $errors[] = 'Phone number must contain exactly 10 digits';
         }
         
         if (empty($password)) {
-
-        $errors[] = 'Password is required';
-
-        } elseif (strlen($password) < 6) {
-
-         $errors[] = 'Password must be at least 6 characters';
-
-        } elseif (
-        !preg_match('/[A-Z]/', $password) ||
-        !preg_match('/[a-z]/', $password) ||
-        !preg_match('/[0-9]/', $password) ||
-        !preg_match('/[\W_]/', $password)
-        ) {
-
-        $errors[] = 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.';
             $errors[] = 'Password is required';
         } elseif (strlen($password) < 8) {
             $errors[] = 'Password must be at least 8 characters';

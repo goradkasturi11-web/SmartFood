@@ -23,14 +23,9 @@ class NGOController {
             header('Location: ' . BASE_URL . '/index.php?route=login');
             exit;
         }
-        
-        // Check if NGO is verified
-        $ngoDetails = $this->userModel->getNGODetails($_SESSION['user_id']);
-        if ($ngoDetails && $ngoDetails['verification_status'] !== 'verified') {
-            session_destroy();
-            header('Location: ' . BASE_URL . '/index.php?route=login');
-            exit;
-        }
+
+        // Get NGO details (don't block pending NGOs from browsing)
+        $this->ngoDetails = $this->userModel->getNGODetails($_SESSION['user_id']);
     }
     
     /**
@@ -57,9 +52,17 @@ class NGOController {
             'min_quantity' => $_GET['min_quantity'] ?? '',
             'location' => $_GET['location'] ?? ''
         ];
-        
+
         $donations = $this->donationModel->getAvailableDonations($filters);
-        
+
+        // Debug logging
+        error_log("NGO Browse Food - NGO ID: " . ($_SESSION['user_id'] ?? 'not set'));
+        error_log("NGO Browse Food - Filters: " . json_encode($filters));
+        error_log("NGO Browse Food - Donations count: " . count($donations));
+        if (empty($donations)) {
+            error_log("NGO Browse Food - No donations found");
+        }
+
         require_once __DIR__ . '/../views/ngo/browse_food.php';
     }
     
@@ -82,8 +85,15 @@ class NGOController {
      * Request a donation
      */
     public function requestDonation($donationId) {
+        // Check if NGO is verified before allowing requests
+        if ($this->ngoDetails && $this->ngoDetails['verification_status'] !== 'verified') {
+            $_SESSION['error'] = 'Your NGO account must be verified before requesting donations';
+            header('Location: ' . BASE_URL . '/index.php?route=ngo-browse-food');
+            exit;
+        }
+
         $ngoId = $_SESSION['user_id'];
-        
+
         $donation = $this->donationModel->getDonationById($donationId);
         
         if (!$donation || $donation['status'] !== 'available') {

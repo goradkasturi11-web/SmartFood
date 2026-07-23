@@ -1,13 +1,4 @@
--- =========================================
--- Smart Food Redistribution Platform
--- Database Initialization Script
--- =========================================
 
--- Create database
-CREATE DATABASE IF NOT EXISTS smartfood;
-USE smartfood;
-
--- =========================================
 -- Table: users
 -- =========================================
 CREATE TABLE users (
