@@ -1,11 +1,17 @@
 <?php
 /**
- * Application Configuration
+
  * Smart Food Redistribution Platform
  */
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
+    // Set session configuration
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.cookie_secure', 0); // Set to 1 if using HTTPS
+    ini_set('session.use_only_cookies', 1);
+    ini_set('session.cookie_samesite', 'Lax');
+    
     session_start();
 }
 
@@ -15,6 +21,11 @@ if (!defined('BASE_URL')) {
     $host = $_SERVER['HTTP_HOST'];
     $path = dirname($_SERVER['SCRIPT_NAME']);
     define('BASE_URL', $protocol . '://' . $host . $path);
+}
+
+// Upload URL - points to the uploaded files directory
+if (!defined('UPLOAD_URL')) {
+    define('UPLOAD_URL', rtrim(dirname(BASE_URL), '/') . '/uploads');
 }
 
 // Site name

@@ -18,7 +18,11 @@ require_once __DIR__ . '/../layouts/header.php';
             <div class="card-body">
                 <?php if ($donation['image_path']): ?>
                     <div class="mb-3">
+<<<<<<< HEAD
                         <img src="<?php echo BASE_URL; ?>/uploads/<?php echo htmlspecialchars($donation['image_path']); ?>" class="img-fluid rounded" alt="Food image">
+=======
+                        <img src="<?php echo UPLOAD_URL; ?>/<?php echo htmlspecialchars($donation['image_path']); ?>" class="img-fluid rounded" alt="Food image">
+>>>>>>> b55fcb823b30212af05b5f3f73817827df7b53ba
                     </div>
                 <?php endif; ?>
                 

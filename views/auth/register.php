@@ -11,6 +11,26 @@ require_once __DIR__ . '/../layouts/header.php';
                 <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
                 <h2 class="fw-bold">Create Your Account</h2>
                 <p class="text-muted">Join the Smart Food Redistribution Platform</p>
+                <div class="mb-4">
+                <div class="d-flex justify-content-between mb-1">
+                    <small class="text-muted fw-bold">
+                        Registration Progress
+                    </small>
+
+                    <small id="progress-text" class="fw-bold text-success">
+                        0%
+                    </small>
+                </div>
+
+                <div class="progress rounded-pill" style="height:12px;">
+                    <div
+                        id="formProgress"
+                        class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                        role="progressbar"
+                        style="width:0%; transition:width .4s ease;">
+                    </div>
+                </div>
+            </div>
             </div>
                 
                 <?php if (isset($_SESSION['register_errors'])): ?>
@@ -156,10 +176,74 @@ function toggleNGOFields() {
     }
 }
 
-// Initialize on page load
+// Initialize on page load     
 document.addEventListener('DOMContentLoaded', function() {
     toggleNGOFields();
 });
+</script>
+<script>
+const fields = [
+    "role",
+    "name",
+    "email",
+    "phone",
+    "password",
+    "confirm_password",
+    "address"
+];
+
+function updateProgress() {
+
+    let filled = 0;
+    let total = 7;
+
+    fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+
+        if (field && field.value.trim() !== "") {
+            filled++;
+        }
+    });
+
+    if (document.getElementById("role").value === "ngo") {
+
+        total = 9;
+
+        if (document.getElementById("organization_name").value.trim() !== "")
+            filled++;
+
+        if (document.getElementById("registration_number").value.trim() !== "")
+            filled++;
+    }
+
+    const percentage = Math.round((filled / total) * 100);
+
+    const bar = document.getElementById("formProgress");
+    const text = document.getElementById("progress-text");
+
+    bar.style.width = percentage + "%";
+    text.innerHTML = percentage + "%";
+
+    // Change colors
+    bar.classList.remove("bg-danger","bg-warning","bg-success");
+
+    if (percentage <= 30) {
+        bar.classList.add("bg-danger");
+    }
+    else if (percentage <= 70) {
+        bar.classList.add("bg-warning");
+    }
+    else {
+        bar.classList.add("bg-success");
+    }
+}
+
+document.querySelectorAll("input, textarea, select").forEach(element => {
+    element.addEventListener("input", updateProgress);
+    element.addEventListener("change", updateProgress);
+});
+
+document.addEventListener("DOMContentLoaded", updateProgress);
 </script>
 
 <?php 

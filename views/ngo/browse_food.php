@@ -15,37 +15,41 @@ require_once __DIR__ . '/../layouts/header.php';
         <h5 class="mb-0">Filter Donations</h5>
     </div>
     <div class="card-body">
-        <form action="<?php echo BASE_URL; ?>/index.php?route=ngo-browse-food" method="GET">
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <label for="food_type" class="form-label">Food Type</label>
-                    <select class="form-select" id="food_type" name="food_type">
-                        <option value="">All Types</option>
-                        <option value="cooked" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'cooked') ? 'selected' : ''; ?>>Cooked Food</option>
-                        <option value="raw" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'raw') ? 'selected' : ''; ?>>Raw Ingredients</option>
-                        <option value="packaged" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'packaged') ? 'selected' : ''; ?>>Packaged Food</option>
-                        <option value="beverages" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'beverages') ? 'selected' : ''; ?>>Beverages</option>
-                        <option value="bakery" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'bakery') ? 'selected' : ''; ?>>Bakery Items</option>
-                        <option value="dairy" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'dairy') ? 'selected' : ''; ?>>Dairy Products</option>
-                        <option value="fruits" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'fruits') ? 'selected' : ''; ?>>Fruits & Vegetables</option>
-                        <option value="other" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'other') ? 'selected' : ''; ?>>Other</option>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="min_quantity" class="form-label">Min Quantity</label>
-                    <input type="number" step="0.01" class="form-control" id="min_quantity" name="min_quantity" 
-                           value="<?php echo isset($filters['min_quantity']) ? htmlspecialchars($filters['min_quantity']) : ''; ?>">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="location" class="form-label">Location</label>
-                    <input type="text" class="form-control" id="location" name="location" 
-                           value="<?php echo isset($filters['location']) ? htmlspecialchars($filters['location']) : ''; ?>" placeholder="City or area">
-                </div>
-                <div class="col-md-3 mb-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-success w-100">Filter</button>
-                </div>
-            </div>
-        </form>
+    <form action="<?php echo BASE_URL; ?>/index.php" method="GET">
+    <!-- Add this hidden input to preserve your route -->
+    <input type="hidden" name="route" value="ngo-browse-food">
+    
+    <div class="row g-3 align-items-end">
+        <div class="col-md-3">
+            <label for="food_type" class="form-label">Food Type</label>
+            <select class="form-select" id="food_type" name="food_type">
+                <option value="">All Types</option>
+                <option value="cooked" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'cooked') ? 'selected' : ''; ?>>Cooked Food</option>
+                <option value="raw" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'raw') ? 'selected' : ''; ?>>Raw Ingredients</option>
+                <option value="packaged" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'packaged') ? 'selected' : ''; ?>>Packaged Food</option>
+                <option value="beverages" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'beverages') ? 'selected' : ''; ?>>Beverages</option>
+                <option value="bakery" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'bakery') ? 'selected' : ''; ?>>Bakery Items</option>
+                <option value="dairy" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'dairy') ? 'selected' : ''; ?>>Dairy Products</option>
+                <option value="fruits" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'fruits') ? 'selected' : ''; ?>>Fruits & Vegetables</option>
+                <option value="other" <?php echo (isset($filters['food_type']) && $filters['food_type'] === 'other') ? 'selected' : ''; ?>>Other</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="min_quantity" class="form-label">Min Quantity</label>
+            <input type="number" step="0.01" class="form-control" id="min_quantity" name="min_quantity" 
+                   value="<?php echo isset($filters['min_quantity']) ? htmlspecialchars($filters['min_quantity']) : ''; ?>">
+        </div>
+        <div class="col-md-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" name="location" 
+                   value="<?php echo isset($filters['location']) ? htmlspecialchars($filters['location']) : ''; ?>" placeholder="City or area">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label d-block">&nbsp;</label>
+            <button type="submit" class="btn btn-success w-100 fs-5 fw-semibold py-0" style="height: 50px;">Filter</button>
+        </div>
+    </div>
+</form>
     </div>
 </div>
 
