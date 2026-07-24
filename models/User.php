@@ -67,6 +67,7 @@ class User {
      * Login user
      */
     public function login($email, $password) {
+        $email = trim($email);
         try {
             $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
             $stmt = $this->db->prepare($sql);
@@ -82,7 +83,7 @@ class User {
             }
             return false;
         } catch(PDOException $e) {
-            error_log("Login error: " . $e->getMessage());
+            error_log("User Login Failed: " . $e->getMessage());
             return false;
         }
     }
@@ -173,6 +174,7 @@ class User {
     
     /**
      * Suspend user account
+     * updated some code to handle user suspension
      */
     public function suspendUser($userId) {
         try {
