@@ -15,23 +15,28 @@ require_once __DIR__ . '/../layouts/header.php';
         <h5 class="mb-0">Filter by Date Range</h5>
     </div>
     <div class="card-body">
-        <form action="<?php echo BASE_URL; ?>/index.php?route=admin-reports" method="GET">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="start_date" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="start_date" name="start_date" 
-                           value="<?php echo isset($startDate) ? htmlspecialchars($startDate) : ''; ?>">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="end_date" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="end_date" name="end_date" 
-                           value="<?php echo isset($endDate) ? htmlspecialchars($endDate) : ''; ?>">
-                </div>
-                <div class="col-md-4 mb-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary w-100">Generate Report</button>
-                </div>
-            </div>
-        </form>
+        <form action="<?php echo BASE_URL; ?>/index.php" method="GET">
+
+    <input type="hidden" name="route" value="admin-print-report">
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="end_date" name="end_date">
+        </div>
+
+        <div class="col-md-4 mb-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">
+                Generate Report
+            </button>
+        </div>
+    </div>
+</form>
     </div>
 </div>
 

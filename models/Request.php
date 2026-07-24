@@ -162,7 +162,9 @@ class Request {
                     JOIN users u_donor ON d.donor_id = u_donor.user_id";
             
             if ($startDate && $endDate) {
-                $sql .= " WHERE r.request_date BETWEEN :start_date AND :end_date";
+                $startDateTime = $startDate . ' 00:00:00';
+                $endDateTime = date('Y-m-d 00:00:00', strtotime($endDate . ' +1 day'));
+                $sql .= " WHERE r.request_date >= :start_date AND r.request_date < :end_date";
             }
             
             $sql .= " ORDER BY r.request_date DESC";
@@ -170,8 +172,8 @@ class Request {
             $stmt = $this->db->prepare($sql);
             
             if ($startDate && $endDate) {
-                $stmt->bindParam(':start_date', $startDate);
-                $stmt->bindParam(':end_date', $endDate);
+                $stmt->bindParam(':start_date', $startDateTime);
+                $stmt->bindParam(':end_date', $endDateTime);
             }
             
             $stmt->execute();

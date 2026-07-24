@@ -239,7 +239,9 @@ class Donation {
                     JOIN users u ON d.donor_id = u.user_id";
             
             if ($startDate && $endDate) {
-                $sql .= " WHERE d.created_at BETWEEN :start_date AND :end_date";
+                $startDateTime = $startDate . ' 00:00:00';
+                $endDateTime = date('Y-m-d 00:00:00', strtotime($endDate . ' +1 day'));
+                $sql .= " WHERE d.created_at >= :start_date AND d.created_at < :end_date";
             }
             
             $sql .= " ORDER BY d.created_at DESC";
@@ -247,8 +249,8 @@ class Donation {
             $stmt = $this->db->prepare($sql);
             
             if ($startDate && $endDate) {
-                $stmt->bindParam(':start_date', $startDate);
-                $stmt->bindParam(':end_date', $endDate);
+                $stmt->bindParam(':start_date', $startDateTime);
+                $stmt->bindParam(':end_date', $endDateTime);
             }
             
             $stmt->execute();
