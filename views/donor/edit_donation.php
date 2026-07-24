@@ -96,7 +96,7 @@ require_once __DIR__ . '/../layouts/header.php';
                         <?php if ($donation['image_path']): ?>
                             <div class="mt-2">
                                 <small class="text-muted">Current image:</small><br>
-                                <img src="<?php echo BASE_URL; ?>/../uploads/<?php echo htmlspecialchars($donation['image_path']); ?>" alt="Food image" style="max-width: 200px; max-height: 200px;">
+                                <img src="<?php echo UPLOAD_URL; ?>/<?php echo htmlspecialchars($donation['image_path']); ?>" alt="Food image" style="max-width: 200px; max-height: 200px;">
                             </div>
                         <?php endif; ?>
                         <small class="text-muted">Maximum file size: 5MB. Allowed formats: JPG, PNG, GIF</small>

@@ -73,6 +73,7 @@ require_once __DIR__ . '/../layouts/header.php';
             <thead>
                 <tr>
                     <th>Food Name</th>
+                    <th>Image</th>
                     <th>Quantity</th>
                     <th>Type</th>
                     <th>Expiry</th>
@@ -84,6 +85,16 @@ require_once __DIR__ . '/../layouts/header.php';
                 <?php foreach ($donations as $donation): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($donation['food_name']); ?></td>
+                        <td>
+                            <?php if (!empty($donation['image_path'])): ?>
+                                <img src="<?php echo UPLOAD_URL; ?>/<?php echo htmlspecialchars($donation['image_path']); ?>"
+                                     alt="<?php echo htmlspecialchars($donation['food_name']); ?>"
+                                     class="img-thumbnail"
+                                     style="width: 80px; height: 80px; object-fit: cover;">
+                            <?php else: ?>
+                                <span class="text-muted">No image</span>
+                            <?php endif; ?>
+                        </td>
                         <td><?php echo htmlspecialchars($donation['quantity_value'] . ' ' . $donation['quantity_unit']); ?></td>
                         <td><?php echo htmlspecialchars($donation['food_type']); ?></td>
                         <td><?php echo date('M d, Y H:i', strtotime($donation['expiry_time'])); ?></td>

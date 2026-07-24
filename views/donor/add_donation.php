@@ -21,6 +21,30 @@ $_SESSION['form_token'] = $formToken;
                     </div>
                     <?php unset($_SESSION['donation_errors']); ?>
                 <?php endif; ?>
+
+                <div class="alert alert-info mb-4">
+                    <h5 class="mb-2"><i class="bi bi-lightbulb"></i> Donation Tips</h5>
+                    <ul class="mb-0 ps-3">
+                        <li>Fresh food only</li>
+                        <li>Pack food properly</li>
+                        <li>Mention exact quantity</li>
+                        <li>Set correct expiry time</li>
+                        <li>Add pickup location</li>
+                    </ul>
+                </div>
+
+                <div class="card border-info mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>Donation Progress</strong>
+                            <span id="progressText" class="text-muted">0%</span>
+                        </div>
+                        <div class="progress" style="height: 12px; overflow: hidden;">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" id="donationProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 0%; transition: width 0.4s ease-in-out, background-color 0.3s ease-in-out;"></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">Fill in all required fields to complete the donation form.</small>
+                    </div>
+                </div>
                 
                 <form action="<?php echo BASE_URL; ?>/index.php?route=donor-add-donation" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="form_token" value="<?php echo $formToken; ?>">
@@ -110,6 +134,54 @@ $_SESSION['form_token'] = $formToken;
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form[action*="donor-add-donation"]');
+        const requiredFields = form.querySelectorAll('[required]');
+        const progressBar = document.getElementById('donationProgressBar');
+        const progressText = document.getElementById('progressText');
+
+        function updateProgress() {
+            let filled = 0;
+
+            requiredFields.forEach(function (field) {
+                if (field.type === 'file') {
+                    if (field.files && field.files.length > 0) {
+                        filled++;
+                    }
+                    return;
+                }
+
+                if (field.value && field.value.trim() !== '') {
+                    filled++;
+                }
+            });
+
+            const total = requiredFields.length;
+            const percent = total > 0 ? Math.round((filled / total) * 100) : 0;
+
+            let colorClass = 'bg-danger';
+            if (percent >= 71) {
+                colorClass = 'bg-success';
+            } else if (percent >= 31) {
+                colorClass = 'bg-warning';
+            }
+
+            progressBar.className = 'progress-bar ' + colorClass + ' progress-bar-striped progress-bar-animated';
+            progressBar.style.width = percent + '%';
+            progressBar.setAttribute('aria-valuenow', percent);
+            progressText.textContent = percent + '%';
+        }
+
+        requiredFields.forEach(function (field) {
+            field.addEventListener('input', updateProgress);
+            field.addEventListener('change', updateProgress);
+        });
+
+        updateProgress();
+    });
+</script>
 
 <?php 
 unset($_SESSION['donation_data']);
