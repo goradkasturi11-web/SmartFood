@@ -21,6 +21,17 @@ $_SESSION['form_token'] = $formToken;
                     </div>
                     <?php unset($_SESSION['donation_errors']); ?>
                 <?php endif; ?>
+
+                <div class="alert alert-info mb-4">
+                    <h5 class="mb-2"><i class="bi bi-lightbulb"></i> Donation Tips</h5>
+                    <ul class="mb-0 ps-3">
+                        <li>Fresh food only</li>
+                        <li>Pack food properly</li>
+                        <li>Mention exact quantity</li>
+                        <li>Set correct expiry time</li>
+                        <li>Add pickup location</li>
+                    </ul>
+                </div>
                 
                 <form action="<?php echo BASE_URL; ?>/index.php?route=donor-add-donation" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="form_token" value="<?php echo $formToken; ?>">
