@@ -204,6 +204,24 @@ class NGOController {
     }
     
     /**
+     * Display track request progress
+     */
+    public function trackRequest($requestId) {
+        $ngoId = $_SESSION['user_id'];
+        
+        $request = $this->requestModel->getRequestById($requestId);
+        
+        if (!$request || $request['ngo_id'] != $ngoId) {
+            $_SESSION['error'] = 'Request not found or access denied';
+            header('Location: ' . BASE_URL . '/index.php?route=ngo-dashboard');
+            exit;
+        }
+        
+        $unreadCount = $this->notificationModel->getUnreadCount($ngoId);
+        require_once __DIR__ . '/../views/ngo/track_request.php';
+    }
+    
+    /**
      * Display feedback form
      */
     public function showFeedback($requestId) {

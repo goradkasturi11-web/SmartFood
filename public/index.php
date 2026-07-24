@@ -241,6 +241,17 @@ switch ($route) {
         }
         break;
         
+    case 'ngo-track-request':
+        $ngo = new NGOController();
+        $requestId = $_GET['id'] ?? null;
+        if ($requestId) {
+            $ngo->trackRequest($requestId);
+        } else {
+            header('Location: ' . BASE_URL . '/index.php?route=ngo-dashboard');
+            exit;
+        }
+        break;
+        
     case 'ngo-notifications':
         $ngo = new NGOController();
         $ngo->notifications();

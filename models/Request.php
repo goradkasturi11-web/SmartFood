@@ -38,6 +38,7 @@ class Request {
     public function getRequestById($requestId) {
         try {
             $sql = "SELECT r.*, d.food_name, d.quantity_value, d.quantity_unit, d.pickup_location,
+                    d.status as donation_status,
                     u_ngo.name as ngo_name, u_ngo.phone as ngo_phone,
                     u_donor.name as donor_name, u_donor.phone as donor_phone
                     FROM requests r 

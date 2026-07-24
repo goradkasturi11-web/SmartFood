@@ -110,19 +110,30 @@ require_once __DIR__ . '/../layouts/header.php';
                         </td>
                         <td>
                             <?php if ($request['status'] === 'pending'): ?>
-                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-cancel-request&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Cancel this request?');">
+                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-cancel-request&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-danger mb-1" onclick="return confirm('Cancel this request?');">
                                     <i class="bi bi-x"></i> Cancel
                                 </a>
+                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-track-request&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-primary mb-1">
+                                    <i class="bi bi-truck"></i> Track
+                                </a>
                             <?php elseif ($request['status'] === 'approved' && $request['donation_status'] !== 'completed'): ?>
-                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-mark-collected&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-success" onclick="return confirm('Mark this food as collected?');">
+                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-mark-collected&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-success mb-1" onclick="return confirm('Mark this food as collected?');">
                                     <i class="bi bi-check"></i> Mark Collected
                                 </a>
+                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-track-request&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-primary mb-1">
+                                    <i class="bi bi-truck"></i> Track
+                                </a>
                             <?php elseif ($request['status'] === 'approved' && $request['donation_status'] === 'completed'): ?>
-                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-feedback&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-info">
+                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-feedback&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-info mb-1">
                                     <i class="bi bi-star"></i> Feedback
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>/index.php?route=ngo-track-request&id=<?php echo $request['request_id']; ?>" class="btn btn-sm btn-primary mb-1">
+                                    <i class="bi bi-truck"></i> Track
                                 </a>
                             <?php elseif ($request['status'] === 'rejected'): ?>
                                 <span class="text-danger">Rejected</span>
+                            <?php elseif ($request['status'] === 'cancelled'): ?>
+                                <span class="text-secondary">Cancelled</span>
                             <?php endif; ?>
                         </td>
                     </tr>
