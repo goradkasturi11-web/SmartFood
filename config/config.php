@@ -17,6 +17,11 @@ if (!defined('BASE_URL')) {
     define('BASE_URL', $protocol . '://' . $host . $path);
 }
 
+// Upload URL - points to the uploaded files directory
+if (!defined('UPLOAD_URL')) {
+    define('UPLOAD_URL', rtrim(dirname(BASE_URL), '/') . '/uploads');
+}
+
 // Site name
 define('SITE_NAME', 'Smart Food Redistribution Platform');
 
