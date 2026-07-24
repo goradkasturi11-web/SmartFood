@@ -32,7 +32,7 @@ if (!defined('UPLOAD_URL')) {
 define('SITE_NAME', 'FoodBridge');
 
 // File upload settings
-define('UPLOAD_DIR', __DIR__ . '/../uploads/');
+define('UPLOAD_DIR', __DIR__ . '/../public/uploads/');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
 define('ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif']);
 

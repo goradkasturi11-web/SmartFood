@@ -434,6 +434,14 @@ class DonorController {
      * Handle image upload
      */
     private function handleImageUpload($file) {
+        if (!isset($file['name'], $file['tmp_name']) || empty($file['name'])) {
+            return ['success' => false, 'error' => 'No image file selected.'];
+        }
+
+        if (!is_uploaded_file($file['tmp_name'])) {
+            return ['success' => false, 'error' => 'Invalid upload request.'];
+        }
+
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         
         if (!in_array($extension, ALLOWED_EXTENSIONS)) {
@@ -443,12 +451,16 @@ class DonorController {
         if ($file['size'] > MAX_FILE_SIZE) {
             return ['success' => false, 'error' => 'File size exceeds limit (5MB).'];
         }
+
+        if (!is_dir(UPLOAD_DIR) && !mkdir(UPLOAD_DIR, 0775, true) && !is_dir(UPLOAD_DIR)) {
+            return ['success' => false, 'error' => 'Upload folder is not available. Please contact support.'];
+        }
         
         $filename = uniqid() . '.' . $extension;
         $filepath = UPLOAD_DIR . $filename;
         
         if (!move_uploaded_file($file['tmp_name'], $filepath)) {
-            return ['success' => false, 'error' => 'Failed to upload file.'];
+            return ['success' => false, 'error' => 'Failed to upload file. Please check the upload folder permissions.'];
         }
         
         return ['success' => true, 'path' => $filename];

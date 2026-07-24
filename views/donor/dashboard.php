@@ -78,6 +78,7 @@ require_once __DIR__ . '/../layouts/header.php';
                     <th>Type</th>
                     <th>Expiry</th>
                     <th>Status</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -109,6 +110,16 @@ require_once __DIR__ . '/../layouts/header.php';
                             }
                             ?>
                             <span class="badge bg-<?php echo $statusClass; ?>"><?php echo ucfirst($donation['status']); ?></span>
+                        </td>
+                        <td>
+                            <?php if (!empty($donation['image_path'])): ?>
+                                <img src="<?php echo BASE_URL; ?>/uploads/<?php echo htmlspecialchars($donation['image_path']); ?>"
+                                     alt="<?php echo htmlspecialchars($donation['food_name']); ?>"
+                                     class="img-thumbnail"
+                                     style="width: 80px; height: 80px; object-fit: cover;">
+                            <?php else: ?>
+                                <span class="text-muted">No image</span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <a href="<?php echo BASE_URL; ?>/index.php?route=donor-view-requests&id=<?php echo $donation['donation_id']; ?>" class="btn btn-sm btn-info">
