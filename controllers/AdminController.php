@@ -110,21 +110,42 @@ class AdminController {
     /**
      * Display reports
      */
-    public function reports() {
-        $startDate = $_GET['start_date'] ?? null;
-        $endDate = $_GET['end_date'] ?? null;
-        
-        $donations = $this->donationModel->getAllDonations($startDate, $endDate);
-        $requests = $this->requestModel->getAllRequests($startDate, $endDate);
-        
-        // Calculate statistics
-        $totalDonations = count($donations);
-        $completedDonations = count(array_filter($donations, function($d) { return $d['status'] === 'completed'; }));
-        $totalRequests = count($requests);
-        $approvedRequests = count(array_filter($requests, function($r) { return $r['status'] === 'approved'; }));
-        
-        require_once __DIR__ . '/../views/admin/reports.php';
+public function report()
+{
+    require_once __DIR__ . '/../views/admin/report_filter.php';
+}
+
+
+public function printReport()
+{
+    $startDate = $_GET['start_date'] ?? null;
+    $endDate = $_GET['end_date'] ?? null;
+
+    $donations = $this->donationModel->getAllDonations($startDate, $endDate);
+    $requests = $this->requestModel->getAllRequests($startDate, $endDate);
+
+    if ($donations === false) {
+        $donations = [];
     }
+
+    if ($requests === false) {
+        $requests = [];
+    }
+
+    $totalDonations = count($donations);
+
+    $completedDonations = count(array_filter($donations, function($d){
+        return $d['status'] == 'completed';
+    }));
+
+    $totalRequests = count($requests);
+
+    $approvedRequests = count(array_filter($requests, function($r){
+        return $r['status'] == 'approved';
+    }));
+
+    require_once __DIR__ . '/../views/admin/report_print.php';
+}
     
     /**
      * Display donation history

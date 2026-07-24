@@ -109,7 +109,7 @@ CREATE TABLE notifications (
 -- Password: admin123 (hashed with password_hash)
 -- =========================================
 INSERT INTO users (name, email, phone, password, role, address) 
-VALUES ('Admin', 'admin@smartfood.com', '1234567890', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'Admin Office');
+VALUES ('Admin', 'admin@smartfood.com', '1234567890', '$2y$10$v3yaTvZ0kLakEjj6C/rHU.xS4wLORotO1cfuCu1n34btE6RD/OH8i', 'admin', 'Admin Office');
 
 -- =========================================
 -- Create indexes for better performance

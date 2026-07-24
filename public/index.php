@@ -264,10 +264,19 @@ switch ($route) {
         break;
         
     case 'admin-reports':
-        $admin = new AdminController();
-        $admin->reports();
-        break;
-        
+
+    $admin = new AdminController();
+
+    if(isset($_GET['start_date']) && isset($_GET['end_date']))
+    {
+        $admin->printReport();
+    }
+    else
+    {
+        $admin->report();
+    }
+
+    break;
     case 'admin-donation-history':
         $admin = new AdminController();
         $admin->donationHistory();
