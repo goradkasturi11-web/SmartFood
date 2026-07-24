@@ -176,7 +176,7 @@ function toggleNGOFields() {
     }
 }
 
-// Initialize on page load
+// Initialize on page load     
 document.addEventListener('DOMContentLoaded', function() {
     toggleNGOFields();
 });
