@@ -7,6 +7,7 @@ require_once __DIR__ . '/../layouts/header.php';
     <h2>User Management</h2>
     <div>
         <form action="<?php echo BASE_URL; ?>/index.php?route=admin-user-management" method="GET" class="d-inline">
+             <input type="hidden" name="route" value="admin-user-management">
             <select name="role" class="form-select d-inline-block w-auto" onchange="this.form.submit()">
                 <option value="">All Users</option>
                 <option value="donor" <?php echo (isset($_GET['role']) && $_GET['role'] === 'donor') ? 'selected' : ''; ?>>Donors Only</option>
