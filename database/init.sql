@@ -8,6 +8,7 @@ CREATE TABLE users (
     phone VARCHAR(15) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('donor', 'ngo', 'admin') NOT NULL,
+    status ENUM('active', 'suspended') DEFAULT 'active',
     address TEXT NOT NULL,
     latitude DECIMAL(10, 8) NULL,
     longitude DECIMAL(11, 8) NULL,

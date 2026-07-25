@@ -52,6 +52,13 @@ if (empty($password)) {
         
         $user = $this->userModel->login($email, $password);
         
+        if ($user === 'suspended') {
+            $_SESSION['login_errors'] = ['Your account has been suspended by the administrator'];
+            $_SESSION['login_email'] = $email;
+            header('Location: ' . BASE_URL . '/index.php?route=login');
+            exit;
+        }
+        
         if ($user) {
             session_regenerate_id(true);
             // Check if NGO is verified

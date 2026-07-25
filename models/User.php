@@ -10,6 +10,24 @@ class User {
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
     }
+
+    private function ensureUsersStatusColumn() {
+        try {
+            $this->db->query("SELECT status FROM users LIMIT 1");
+            return true;
+        } catch (PDOException $e) {
+            if (strpos($e->getMessage(), 'Unknown column') !== false || strpos($e->getMessage(), 'doesn\'t exist') !== false) {
+                try {
+                    $this->db->exec("ALTER TABLE users ADD COLUMN status ENUM('active','suspended') NOT NULL DEFAULT 'active' AFTER role");
+                    return true;
+                } catch (PDOException $alterError) {
+                    error_log("Ensure users status column error: " . $alterError->getMessage());
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
     
     /**
      * Register a new user
@@ -69,6 +87,10 @@ class User {
     public function login($email, $password) {
         $email = trim($email);
         try {
+            if (!$this->ensureUsersStatusColumn()) {
+                return false;
+            }
+
             $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':email', $email);
@@ -77,6 +99,9 @@ class User {
             $user = $stmt->fetch();
             
             if ($user && password_verify($password, $user['password'])) {
+                if (($user['status'] ?? 'active') === 'suspended') {
+                    return 'suspended';
+                }
                 // Remove password from session data
                 unset($user['password']);
                 return $user;
@@ -148,7 +173,11 @@ class User {
      */
     public function getAllUsers($role = null) {
         try {
-            $sql = "SELECT user_id, name, email, phone, role, address, created_at 
+            if (!$this->ensureUsersStatusColumn()) {
+                return false;
+            }
+
+            $sql = "SELECT user_id, name, email, phone, role, status, address, created_at 
                     FROM users";
             
             if ($role) {
@@ -178,6 +207,10 @@ class User {
      */
     public function suspendUser($userId) {
         try {
+            if (!$this->ensureUsersStatusColumn()) {
+                return false;
+            }
+
             $sql = "UPDATE users SET status = 'suspended' WHERE user_id = :user_id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':user_id', $userId);

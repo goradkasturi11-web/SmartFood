@@ -47,6 +47,7 @@ require_once __DIR__ . '/../layouts/header.php';
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Role</th>
+                    <th>Status</th>
                     <th>Address</th>
                     <th>Registered</th>
                     <th>Actions</th>
@@ -64,13 +65,22 @@ require_once __DIR__ . '/../layouts/header.php';
                                 <?php echo ucfirst($user['role']); ?>
                             </span>
                         </td>
+                        <td>
+                            <span class="badge bg-<?php echo ($user['status'] ?? 'active') === 'suspended' ? 'danger' : 'success'; ?>">
+                                <?php echo (($user['status'] ?? 'active') === 'suspended') ? 'Suspended' : 'Active'; ?>
+                            </span>
+                        </td>
                         <td><?php echo htmlspecialchars(substr($user['address'], 0, 50)); ?>...</td>
                         <td><?php echo date('M d, Y', strtotime($user['created_at'])); ?></td>
                         <td>
                             <?php if ($user['role'] !== 'admin'): ?>
-                                <a href="<?php echo BASE_URL; ?>/index.php?route=admin-suspend-user&id=<?php echo $user['user_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Suspend this user?');">
-                                    <i class="bi bi-person-x"></i> Suspend
-                                </a>
+                                <?php if (($user['status'] ?? 'active') === 'suspended'): ?>
+                                    <span class="text-muted">Already suspended</span>
+                                <?php else: ?>
+                                    <a href="<?php echo BASE_URL; ?>/index.php?route=admin-suspend-user&id=<?php echo $user['user_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Suspend this user?');">
+                                        <i class="bi bi-person-x"></i> Suspend
+                                    </a>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </td>
                     </tr>
