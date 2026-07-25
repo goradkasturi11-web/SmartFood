@@ -49,6 +49,13 @@ class AuthController {
         
         $user = $this->userModel->login($email, $password);
         
+        if ($user === 'suspended') {
+            $_SESSION['login_errors'] = ['Your account has been suspended by the administrator'];
+            $_SESSION['login_email'] = $email;
+            header('Location: ' . BASE_URL . '/index.php?route=login');
+            exit;
+        }
+        
         if ($user) {
             // Check if NGO is verified
             if ($user['role'] === 'ngo') {
