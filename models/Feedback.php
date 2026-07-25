@@ -53,6 +53,29 @@ class Feedback {
             return false;
         }
     }
+
+    /**
+     * Get feedback submitted by a user (e.g., NGO)
+     */
+    public function getFeedbackByUser($userId) {
+        try {
+            $sql = "SELECT f.*, d.food_name, u.name as donor_name
+                    FROM feedback f
+                    JOIN donations d ON f.donation_id = d.donation_id
+                    JOIN users u ON d.donor_id = u.user_id
+                    WHERE f.user_id = :user_id
+                    ORDER BY f.created_at DESC";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':user_id', $userId);
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        } catch(PDOException $e) {
+            error_log("Get user feedback error: " . $e->getMessage());
+            return false;
+        }
+    }
     
     /**
      * Get average rating for a donor

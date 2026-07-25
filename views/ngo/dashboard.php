@@ -143,4 +143,37 @@ require_once __DIR__ . '/../layouts/header.php';
     </div>
 <?php endif; ?>
 
+<div class="container mt-5">
+    <h3 class="mb-3">My Feedbacks</h3>
+
+    <?php if (empty($myFeedbacks)): ?>
+        <div class="alert alert-info">You haven't submitted any feedback yet.</div>
+    <?php else: ?>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Donor</th>
+                        <th>Rating</th>
+                        <th>Comments</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($myFeedbacks as $fb): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($fb['food_name']); ?></td>
+                            <td><?php echo htmlspecialchars($fb['donor_name']); ?></td>
+                            <td><?php echo htmlspecialchars($fb['rating']); ?></td>
+                            <td><?php echo nl2br(htmlspecialchars($fb['comments'])); ?></td>
+                            <td><?php echo date('M d, Y H:i', strtotime($fb['created_at'])); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+</div>
+
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

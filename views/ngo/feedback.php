@@ -36,7 +36,7 @@ require_once __DIR__ . '/../layouts/header.php';
                     <?php unset($_SESSION['feedback_success']); ?>
                 <?php endif; ?>
                 
-                <form action="<?php echo BASE_URL; ?>/index.php?route=ngo-submit-feedback&id=<?php echo $request['request_id']; ?>" method="POST">
+                <form action="<?php echo BASE_URL; ?>/index.php?route=ngo-feedback&id=<?php echo $request['request_id']; ?>" method="POST">
                     <div class="mb-3">
                         <label for="rating" class="form-label">Rating (1-5)</label>
                         <select class="form-select" id="rating" name="rating" required>

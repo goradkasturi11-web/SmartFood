@@ -40,6 +40,9 @@ class NGOController {
         // Get unread notification count
         $unreadCount = $this->notificationModel->getUnreadCount($ngoId);
         
+        // Get feedbacks submitted by this NGO
+        $myFeedbacks = $this->feedbackModel->getFeedbackByUser($ngoId);
+        
         require_once __DIR__ . '/../views/ngo/dashboard.php';
     }
     
