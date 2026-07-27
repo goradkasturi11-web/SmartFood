@@ -6,15 +6,25 @@ require_once __DIR__ . '/../layouts/header.php';
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Request History</h2>
     <div>
-        <form action="<?php echo BASE_URL; ?>/index.php?route=admin-request-history" method="GET" class="d-inline">
-            <div class="input-group">
-                <input type="date" class="form-control" name="start_date" 
-                       value="<?php echo isset($startDate) ? htmlspecialchars($startDate) : ''; ?>" placeholder="Start Date">
-                <input type="date" class="form-control" name="end_date" 
-                       value="<?php echo isset($endDate) ? htmlspecialchars($endDate) : ''; ?>" placeholder="End Date">
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
-        </form>
+        <form action="<?php echo BASE_URL; ?>/index.php" method="GET">
+
+    <input type="hidden"
+           name="route"
+           value="admin-request-history">
+
+    <input type="date"
+           name="start_date"
+           value="<?php echo $_GET['start_date'] ?? ''; ?>">
+
+    <input type="date"
+           name="end_date"
+           value="<?php echo $_GET['end_date'] ?? ''; ?>">
+
+    <button type="submit" class="btn btn-primary">
+        Filter
+    </button>
+
+</form>
         <a href="<?php echo BASE_URL; ?>/index.php?route=admin-dashboard" class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> Back to Dashboard
         </a>
