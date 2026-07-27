@@ -159,7 +159,7 @@ public function printReport()
         require_once __DIR__ . '/../views/admin/donation_history.php';
     }
     
-    /**
+    /**  
      * Display request history
      */
     public function requestHistory() {
