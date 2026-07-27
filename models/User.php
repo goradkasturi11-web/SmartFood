@@ -63,7 +63,7 @@ class User {
         }
     }
     
-    
+
     /**
      * Login user
      */
@@ -140,6 +140,22 @@ class User {
             return $stmt->fetch() !== false;
         } catch(PDOException $e) {
             error_log("Email check error: " . $e->getMessage());
+            return false;
+        }
+    }
+    /**
+     * Check if phone number already exists
+     */
+    public function phoneExists($phone) {
+        try {
+            $sql = "SELECT user_id FROM users WHERE phone = :phone";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':phone', $phone);
+            $stmt->execute();
+
+            return $stmt->fetch() !== false;
+        } catch(PDOException $e) {
+            error_log("Phone check error: " . $e->getMessage());
             return false;
         }
     }
@@ -234,4 +250,5 @@ class User {
         }
     }
 }
+
 ?>

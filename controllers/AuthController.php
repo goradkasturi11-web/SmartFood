@@ -145,37 +145,26 @@ if (empty($password)) {
         } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
             $errors[] = 'Phone number must contain exactly 10 digits';
         }
+
         
-        
+        // Password validation
         if (empty($password)) {
-
-        $errors[] = 'Password is required';
-
-        } elseif (strlen($password) < 6) {
-
-         $errors[] = 'Password must be at least 6 characters';
-
-        } elseif (
-        !preg_match('/[A-Z]/', $password) ||
-        !preg_match('/[a-z]/', $password) ||
-        !preg_match('/[0-9]/', $password) ||
-        !preg_match('/[\W_]/', $password)
-        ) {
-
-        $errors[] = 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.';
             $errors[] = 'Password is required';
-        } elseif (strlen($password) < 8) {
-            $errors[] = 'Password must be at least 8 characters';
+        } elseif (!preg_match(
+            '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{6,}$/',
+            $password
+        )) {
+            $errors[] = 'Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character.';
         }
-        
+        // Confirm password validation
         if ($password !== $confirmPassword) {
             $errors[] = 'Passwords do not match';
         }
-        
+        // Role validation
         if (empty($role) || !in_array($role, ['donor', 'ngo'])) {
             $errors[] = 'Invalid role selected';
         }
-        
+        // Address validation
         if (empty($address)) {
             $errors[] = 'Address is required';
         }
@@ -193,6 +182,10 @@ if (empty($password)) {
         // Check if email already exists
         if ($this->userModel->emailExists($email)) {
             $errors[] = 'Email already registered';
+        }
+        // Check if phone number already exists
+        if ($this->userModel->phoneExists($phone)) {
+             $errors[] = 'Phone number already registered';
         }
         
         if (!empty($errors)) {
