@@ -153,6 +153,7 @@ if (empty($password)) {
             $errors[] = 'Phone number must contain exactly 10 digits';
         }
         
+        
         if (empty($password)) {
             $errors[] = 'Password is required';
         } elseif (strlen($password) < 8) {
